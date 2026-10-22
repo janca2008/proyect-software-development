@@ -11,7 +11,8 @@ class ProductBase(BaseModel):
     category: str
     status : Status
 
-
+class ProductID(ProductBase):
+    id: int
 
 
 
