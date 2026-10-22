@@ -1,14 +1,16 @@
 from pydantic import BaseModel
-
+from enums.status import Status
+from enums.departments import Department
 class productoBase(BaseModel):
     name: str
     starting_price: int
     finish_price: int
     utility : int #TODO calcular la resta de finish price y starting price
     description: str
-    department: str
+    department: Department = Department.others
     category: str
-    status : str #TODO hacer un enums para activate y deactivate
+    status : Status
+
 
 
 
