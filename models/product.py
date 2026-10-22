@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from enums.status import Status
 from enums.departments import Department
-class productoBase(BaseModel):
+class ProductBase(BaseModel):
     name: str
     starting_price: int
     finish_price: int

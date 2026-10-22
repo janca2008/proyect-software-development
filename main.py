@@ -1,13 +1,6 @@
 from fastapi import FastAPI
-
+from routers import product
 app = FastAPI()
 
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"hola{name}"}
+app.include_router(router=product.router, prefix="/product", tags=["product"])
