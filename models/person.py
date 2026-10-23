@@ -1,5 +1,6 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from enums.id_type import IdType
+from enums.status import Status
 
 
 class PersonBase(BaseModel):
@@ -8,7 +9,8 @@ class PersonBase(BaseModel):
     id_type: IdType
     id_number: str
     phone_number: str
-    email: EmailStr
+    email: str
+    status: Status
 
 
 class CustomerBase(PersonBase):
