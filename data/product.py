@@ -108,6 +108,47 @@ def read_one_product_by_id(product_id: int):
             return product
     return None
 
+def filter_products(
+    name: str | None = None,
+    description: str | None = None,
+    department: str | None = None,
+    category: str | None = None,
+    status: Status | None = None,
+    min_starting_price: float | None = None,
+    max_starting_price: float | None = None,
+    min_finish_price: float | None = None,
+    max_finish_price: float | None = None,
+):
+    def contains(value, text: str) -> bool:
+        return text.lower() in str(value).lower()
+
+    def same(value, text: str) -> bool:
+        raw = getattr(value, "value", value)
+        return str(raw).lower() == text.lower()
+
+    results = read_all_products()
+
+    if name:
+        results = [p for p in results if contains(p.name, name)]
+    if description:
+        results = [p for p in results if contains(p.description, description)]
+    if department:
+        results = [p for p in results if same(p.department, department)]
+    if category:
+        results = [p for p in results if same(p.category, category)]
+    if status is not None:
+        results = [p for p in results if p.status == status]
+    if min_starting_price is not None:
+        results = [p for p in results if p.starting_price >= min_starting_price]
+    if max_starting_price is not None:
+        results = [p for p in results if p.starting_price <= max_starting_price]
+    if min_finish_price is not None:
+        results = [p for p in results if p.finish_price >= min_finish_price]
+    if max_finish_price is not None:
+        results = [p for p in results if p.finish_price <= max_finish_price]
+
+    return results
+
 
 def read_history():
     try:
