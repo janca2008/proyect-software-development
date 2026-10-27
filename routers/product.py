@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from models.product import ProductBase, ProductID
 import data.product as db
+from enums.status import Status
 
 router = APIRouter()
 
@@ -13,6 +14,29 @@ def list_products():
 @router.get("/history/all")
 def list_history():
     return db.read_history()
+@router.get("/search", response_model=list[ProductID])
+def search_products(
+    name: str | None = None,
+    description: str | None = None,
+    department: str | None = None,
+    category: str | None = None,
+    status: Status | None = None,
+    min_starting_price: float | None = None,
+    max_starting_price: float | None = None,
+    min_finish_price: float | None = None,
+    max_finish_price: float | None = None,
+):
+    return db.filter_products(
+        name=name,
+        description=description,
+        department=department,
+        category=category,
+        status=status,
+        min_starting_price=min_starting_price,
+        max_starting_price=max_starting_price,
+        min_finish_price=min_finish_price,
+        max_finish_price=max_finish_price,
+    )
 
 
 @router.get("/{product_id}", response_model=ProductID)
