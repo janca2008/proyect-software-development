@@ -88,12 +88,12 @@ def create_worker(worker: WorkerBase):
 
 
 def read_all_workers():
-    try:
-        with open(data_base) as csvfile:
-            reader = csv.DictReader(csvfile, fieldnames=column_fields)
-            return [WorkerID(**row) for row in reader]
-    except FileNotFoundError:
-        return []
+    with open(data_base, newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f, fieldnames=column_fields)
+        return [
+            WorkerID(**{**row, "id_type": int(row["id_type"])})
+            for row in reader
+        ]
 
 
 def read_active_workers():
